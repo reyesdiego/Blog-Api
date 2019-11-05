@@ -5,6 +5,7 @@ const chaiAsPromised = require("chai-as-promised");
 
 const mongooseUp = require("../startups/mongooseUp");
 const UserModel = require("../models/user");
+const PostModel = require("../models/post");
 
 const User = require("../services/user");
 const Post = require("../services/post");
@@ -24,6 +25,7 @@ describe("Containn Units Test", function() {
   });
   after(async function() {
     await UserModel.deleteMany();
+    await PostModel.deleteMany();
     mongooseCn.close();
   });
 
@@ -52,5 +54,24 @@ describe("Containn Units Test", function() {
       userId: user._id
     });
     post.should.have.property("_id");
+  });
+
+  it("Post - Update a Post should return a Post object with property changed", async () => {
+    const user = await User.add({ email: "dreyes@gmail.com" });
+
+    const post = await Post.add({
+      title: "Testing post Title",
+      body: "Testing post Body",
+      userId: user._id
+    });
+
+    post = await Post.update({
+      _id: post._id,
+      title: "New Title",
+      body: "New Body"
+    });
+
+    post.title.should.be.equal("New Title");
+    post.body.should.be.equal("New Body");
   });
 });
