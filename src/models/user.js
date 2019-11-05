@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
   },
   {
     collection: "users",
-    strict: true,
     timestamps: {
       createdAt: "createdAt",
       updatedAt: "updatedAt"

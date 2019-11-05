@@ -1,15 +1,19 @@
 const should = require("should");
-var expect = require("chai").expect;
-var chai = require("chai");
-
+const expect = require("chai").expect;
+const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
+
 const mongooseUp = require("../startups/mongooseUp");
+const UserModel = require("../models/user");
+
 const User = require("../services/user");
+const Post = require("../services/post");
 
 chai.use(chaiAsPromised);
 
 describe("Containn Units Test", function() {
   let mongooseCn;
+
   before(function(done) {
     this.timeout(30000);
 
@@ -18,9 +22,9 @@ describe("Containn Units Test", function() {
       done();
     });
   });
-  after(function(done) {
+  after(async function() {
+    await UserModel.deleteMany();
     mongooseCn.close();
-    done();
   });
 
   it("Dummy Test", function(done) {
@@ -37,5 +41,16 @@ describe("Containn Units Test", function() {
     await expect(
       User.add({ email: "reyesdiego@hotmail.com" })
     ).to.be.rejectedWith(Error);
+  });
+
+  it("Post - Adding a new Post should return a Post object with _id", async () => {
+    const user = await User.add({ email: "reyesdiego3060@gmail.com" });
+
+    const post = await Post.add({
+      title: "Testing post Title",
+      body: "Testing post Body",
+      userId: user._id
+    });
+    post.should.have.property("_id");
   });
 });
