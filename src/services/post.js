@@ -25,3 +25,12 @@ module.exports.delete = async _id => {
     throw err;
   }
 };
+
+module.exports.get = async tags => {
+  try {
+    const tagsArray = ("/" + tags.join("/i,/") + "/i").split(",");
+    return await Post.find({ body: { $in: tagsArray } });
+  } catch (err) {
+    throw err;
+  }
+};

@@ -88,7 +88,7 @@ describe("Containn Units Test", function() {
   });
 
   it("Post - Getting all Posts filtered by tag @Diego @Luis should return 2 objects", async () => {
-    const posts = await User.get(["@Diego", "@Luis"]);
+    const posts = await Post.get(["@Diego", "@Luis"]);
     posts.length.should.be.equal(2);
   });
 });
