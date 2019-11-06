@@ -56,7 +56,7 @@ describe("Containn Units Test", function() {
     post.should.have.property("_id");
   });
 
-  it("Post - Update a Post should return a Post object with properties changed", async () => {
+  it("Post - Updating a Post should return a Post object with properties changed", async () => {
     const user = await User.add({ email: "dreyes@gmail.com" });
 
     let post = await Post.add({
@@ -74,7 +74,7 @@ describe("Containn Units Test", function() {
     post.body.should.be.equal("New Body");
   });
 
-  it("Post - Deleting a Post should return a Post object with _id", async () => {
+  it("Post - Deleting a Post should return the deleted Post object", async () => {
     const user = await User.add({ email: "reyes@gmail.com" });
 
     const post = await Post.add({
@@ -83,6 +83,7 @@ describe("Containn Units Test", function() {
       userId: user._id
     });
 
-    Post.delete(post._id);
+    const deletedPost = await Post.delete(post._id);
+    deletedPost._id.toString().should.be.equal(post._id.toString());
   });
 });
