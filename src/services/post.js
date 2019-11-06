@@ -28,7 +28,7 @@ module.exports.delete = async _id => {
 
 module.exports.get = async tags => {
   try {
-    const tagsArray = ("/" + tags.join("/i,/") + "/i").split(",");
+    const tagsArray = tags.map(tag => new RegExp(tag, "i"));
     return await Post.find({ body: { $in: tagsArray } });
   } catch (err) {
     throw err;
