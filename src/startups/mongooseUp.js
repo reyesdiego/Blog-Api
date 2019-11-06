@@ -6,6 +6,8 @@ const { mongo } = require("../../settings");
 module.exports = callback => {
   mongoose.Promise = Promise;
 
+  mongoose.set("useFindAndModify", false); //get rid of deprecation warning
+
   let connect = () => {
     if (mongo.options) {
       mongoose

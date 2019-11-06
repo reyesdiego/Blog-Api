@@ -56,10 +56,10 @@ describe("Containn Units Test", function() {
     post.should.have.property("_id");
   });
 
-  it("Post - Update a Post should return a Post object with property changed", async () => {
+  it("Post - Update a Post should return a Post object with properties changed", async () => {
     const user = await User.add({ email: "dreyes@gmail.com" });
 
-    const post = await Post.add({
+    let post = await Post.add({
       title: "Testing post Title",
       body: "Testing post Body",
       userId: user._id
@@ -70,7 +70,6 @@ describe("Containn Units Test", function() {
       title: "New Title",
       body: "New Body"
     });
-
     post.title.should.be.equal("New Title");
     post.body.should.be.equal("New Body");
   });

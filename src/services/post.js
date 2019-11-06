@@ -7,3 +7,13 @@ module.exports.add = async post => {
     throw err;
   }
 };
+
+module.exports.update = async post => {
+  const { _id } = post;
+  delete post._id;
+  try {
+    return await Post.findByIdAndUpdate(_id, post, { new: true });
+  } catch (err) {
+    throw err;
+  }
+};
