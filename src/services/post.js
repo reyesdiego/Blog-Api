@@ -17,3 +17,11 @@ module.exports.update = async post => {
     throw err;
   }
 };
+
+module.exports.delete = async _id => {
+  try {
+    return await Post.findByIdAndDelete(_id);
+  } catch (err) {
+    throw err;
+  }
+};
