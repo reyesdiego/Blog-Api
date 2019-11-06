@@ -73,4 +73,16 @@ describe("Containn Units Test", function() {
     post.title.should.be.equal("New Title");
     post.body.should.be.equal("New Body");
   });
+
+  it("Post - Deleting a Post should return a Post object with _id", async () => {
+    const user = await User.add({ email: "reyes@gmail.com" });
+
+    const post = await Post.add({
+      title: "Testing post Delete",
+      body: "Testing post Delete",
+      userId: user._id
+    });
+
+    Post.delete(post._id);
+  });
 });
