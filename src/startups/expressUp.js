@@ -29,7 +29,7 @@ module.exports = () => {
   );
 
   app.use((req, res, next) => {
-    let err = new Error("Route Not Found in Containn Blog API");
+    let err = new Error("Route Not Found in Blog API");
     err.status = 404;
     next(err);
   });

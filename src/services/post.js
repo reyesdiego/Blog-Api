@@ -29,7 +29,9 @@ module.exports.delete = async _id => {
 module.exports.get = async tags => {
   try {
     const tagsArray = tags.map(tag => new RegExp(tag, "i"));
-    return await Post.find({ body: { $in: tagsArray } });
+    return await Post.find({ body: { $in: tagsArray } })
+      .populate("userId", "email")
+      .sort({ updatedAt: -1 });
   } catch (err) {
     throw err;
   }
