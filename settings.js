@@ -10,5 +10,6 @@ module.exports = {
       useNewUrlParser: true,
       useUnifiedTopology: true
     }
-  }
+  },
+  http: { port: 8080 }
 };
