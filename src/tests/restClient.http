@@ -8,20 +8,39 @@ Content-Type: application/json
 {"email":"reyesdiego@hotmail.com"}
 
 ###
-POST http://localhost:8080/api-v1/posts
+POST http://localhost:8080/api-v1/auth/login
 Content-Type: application/json
 
-{"title":"Test Title ", "body":"Test Body @Diego", "userId":"5dc2fccad8f2c810a5f0b2e3"}
+{"email":"reyesdiego@hotmail.com", "password":"1234"}
+
+
+###
+POST http://localhost:8080/api-v1/posts
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzMwOTcyNDR9.PexxeJnYodDvTaufKmoZhVEe1iqS0QvtHwjtiObdynU
+
+{"title":"Test Title ", "body":"Test Body @Diego"}
 
 ###
 GET http://localhost:8080/api-v1/posts?tags=@Diego,@Luis
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzMwOTY3ODF9.ShwszgBKy0ivAjSYWHTjQaW2N0lGqsUAABvR4GfsYQk
 
 ###
 PATCH http://localhost:8080/api-v1/posts
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzMwOTY3ODF9.ShwszgBKy0ivAjSYWHTjQaW2N0lGqsUAABvR4GfsYQk
 
 {
-    "_id": "5dc2fefd497e0b1178d94e8b",
-    "title": "Test Title changed 1",
-    "body": "Test Body @Diego changed 1"
-  }
+    "_id": "5dc3911208cc0b2d7c0cc42b",
+    "title": "Test Title changed 33",
+    "body": "Test Body @Diego changed 33"
+}
+
+###
+DELETE http://localhost:8080/api-v1/posts
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzMwOTY3ODF9.ShwszgBKy0ivAjSYWHTjQaW2N0lGqsUAABvR4GfsYQk
+
+{
+    "_id": "5dc3911208cc0b2d7c0cc42b"
+}
