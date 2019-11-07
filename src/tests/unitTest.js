@@ -2,6 +2,8 @@ const should = require("should");
 const expect = require("chai").expect;
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
+const assert = require("chai").assert;
+const jwt = require("jsonwebtoken");
 
 const mongooseUp = require("../startups/mongooseUp");
 const UserModel = require("../models/user");
@@ -9,6 +11,8 @@ const PostModel = require("../models/post");
 
 const User = require("../services/user");
 const Post = require("../services/post");
+const Auth = require("../services/auth");
+const { secret } = require("../../settings");
 
 chai.use(chaiAsPromised);
 
@@ -107,5 +111,28 @@ describe("Containn Units Test", function() {
     });
     const posts = await Post.get(["@Diego", "@LUIS"]);
     posts.length.should.be.equal(2);
+  });
+
+  it("Auth - Getting a token should return a valid GUID", async () => {
+    const token = await Auth.login({
+      email: "reyesdiego@hotmail.com",
+      password: "1234"
+    });
+
+    jwt.verify(token, secret, (err, p) => {
+      assert.isNull(err);
+      p.email.should.be.equal("reyesdiego@hotmail.com");
+    });
+  });
+
+  it("Auth - Verifing a token should fail using an invalid 'secret'", async () => {
+    const token = await Auth.login({
+      email: "reyesdiego@hotmail.com",
+      password: "1234"
+    });
+
+    jwt.verify(token, "InvalidSecret", (err, p) => {
+      assert.isNotNull(err);
+    });
   });
 });

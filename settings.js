@@ -11,5 +11,6 @@ module.exports = {
       useUnifiedTopology: true
     }
   },
-  http: { port: 8080 }
+  http: { port: 8080 },
+  secret: "MySecretWord"
 };
