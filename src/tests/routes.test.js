@@ -61,20 +61,6 @@ describe("Containn Routes Units Test", function() {
       });
   });
 
-  // it("User - Adding a new User Should Faild Duplicate email unique index", async function() {
-  //   this.timeout(10000);
-  //   await expect(
-  //     await chai
-  //       .request(HOST)
-  //       .post("/api-v1/users")
-  //       .send({
-  //         email: "reyesdiego3060@hotmail.com",
-  //         avatar: "http://avatar.com/photo1.jpg"
-  //         // userId: user._id
-  //       })
-  //   ).to.be.rejectedWith(Error);
-  // });
-
   it("Post - Adding a new Post should return a Post object with _id", async () => {
     const user = await User.add({ email: "dreyes@gmail.com" });
 

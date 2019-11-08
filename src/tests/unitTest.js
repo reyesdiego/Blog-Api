@@ -42,13 +42,6 @@ describe("Containn Services Units Test", function() {
     user.should.have.property("_id");
   });
 
-  it("User - Adding a new User Should Faild Duplicate email unique index", async function() {
-    this.timeout(10000);
-    await expect(
-      User.add({ email: "reyesdiego@hotmail.com" })
-    ).to.be.rejectedWith(Error);
-  });
-
   it("Post - Adding a new Post should return a Post object with _id", async () => {
     const user = await User.add({ email: "reyesdiego3060@gmail.com" });
 
