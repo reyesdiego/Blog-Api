@@ -25,7 +25,7 @@ module.exports.delete = async (req, res) => {
 };
 
 module.exports.get = async (req, res) => {
-  const tags = req.query.tags.split(",");
+  const tags = (req.query.tags || "").split(",");
   try {
     const posts = await postService.get(tags);
     res.send(posts);

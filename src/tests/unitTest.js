@@ -16,7 +16,7 @@ const { secret } = require("../../settings");
 
 chai.use(chaiAsPromised);
 
-describe("Containn Units Test", function() {
+describe("Containn Services Units Test", function() {
   let mongooseCn;
 
   before(function(done) {
@@ -116,7 +116,7 @@ describe("Containn Units Test", function() {
   it("Auth - Getting a token should return a valid GUID", async () => {
     const token = await Auth.login({
       email: "reyesdiego@hotmail.com",
-      password: "1234"
+      password: "1234" //fake, not used internally
     });
 
     jwt.verify(token, secret, (err, p) => {

@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     body: { type: String, required: true },
-    userId: { type: mongoose.Schema.ObjectId, ref: "User" }
+    userId: { type: mongoose.Schema.ObjectId, ref: "User", required: true }
   },
   {
     collection: "posts",

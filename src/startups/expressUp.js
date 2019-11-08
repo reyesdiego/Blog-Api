@@ -34,5 +34,5 @@ module.exports = () => {
     next(err);
   });
 
-  return { app };
+  return server;
 };
