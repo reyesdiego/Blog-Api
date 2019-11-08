@@ -22,14 +22,14 @@ describe("Containn Services Units Test", function() {
   before(function(done) {
     this.timeout(30000);
 
-    mongooseUp(connection => {
+    mongooseUp(async connection => {
       mongooseCn = connection;
+      await UserModel.deleteMany();
+      await PostModel.deleteMany();
       done();
     });
   });
   after(async function() {
-    await UserModel.deleteMany();
-    await PostModel.deleteMany();
     mongooseCn.close();
   });
 

@@ -2,9 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const cors = require("cors");
-const http = require("http");
 const settings = require("../../settings");
 const routes = require("../routes");
+const mongooseUp = require("./mongooseUp");
+const { green, red } = require("../utils");
 
 module.exports = () => {
   const app = express();
@@ -16,17 +17,13 @@ module.exports = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  //
   app.use("/api-v1", routes);
 
-  const server = http.createServer(app);
-  //Server starts
-  server.listen(settings.http.port, () =>
-    console.log(
-      `API running on port ${settings.http.port}. (${process.version}) pid:${
-        process.pid
-      } - ${new Date()}`
-    )
-  );
+  app.on("uncaughtException", err => {
+    red(err.stack);
+    process.exit(2);
+  });
 
   app.use((req, res, next) => {
     let err = new Error("Route Not Found in Blog API");
@@ -34,5 +31,20 @@ module.exports = () => {
     next(err);
   });
 
-  return server;
+  mongooseUp(async () => {
+    try {
+      await app.listen(settings.http.port);
+      app.emit("app_started");
+      green(
+        `API running on port ${settings.http.port}. (${process.version}) pid:${
+          process.pid
+        } - ${new Date()}`
+      );
+    } catch (ex) {
+      red("Error starting Blog app:" + err);
+      process.exit(2);
+    }
+  });
+
+  return app;
 };

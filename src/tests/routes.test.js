@@ -1,5 +1,4 @@
 const server = require("../startups/expressUp");
-const mongooseUp = require("../startups/mongooseUp");
 var chai = require("chai");
 const should = require("should");
 const expect = require("chai").expect;
@@ -16,36 +15,31 @@ const PostModel = require("../models/post");
 const User = require("../services/user");
 const Post = require("../services/post");
 
-let ser, connectionDB, token;
+let ser, token;
 
 const HOST = "http://localhost:8080";
-mongooseUp(conn => {
-  connectionDB = conn;
-});
 ser = server();
 
 describe("Containn Routes Units Test", function() {
   before(async () => {
-    await UserModel.deleteMany();
-    await PostModel.deleteMany();
+    await new Promise((resolve, reject) => {
+      ser.on("app_started", async () => {
+        await UserModel.deleteMany();
+        await PostModel.deleteMany();
 
-    User.add({ email: "reyesdiego@hotmail.com" }).then(() => {
-      //Getting token for further tests
-      chai
-        .request(HOST)
-        .post("/api-v1/auth/login")
-        .send({ email: "reyesdiego@hotmail.com", password: "1234" })
-        .end((err, data) => {
-          token = data.res.text;
-          Promise.resolve();
+        User.add({ email: "reyesdiego@hotmail.com" }).then(() => {
+          //Getting token for further tests
+          chai
+            .request(HOST)
+            .post("/api-v1/auth/login")
+            .send({ email: "reyesdiego@hotmail.com", password: "1234" })
+            .end((err, data) => {
+              token = data.res.text;
+              resolve();
+            });
         });
+      });
     });
-  });
-
-  after(done => {
-    connectionDB.close();
-    ser.close();
-    setTimeout(done(), 1000);
   });
 
   it("Dummy Test", function(done) {
@@ -154,21 +148,24 @@ describe("Containn Routes Units Test", function() {
       });
   });
 
-  it("Auth - Getting a token should return a valid GUID", async () => {
+  it("Auth - Getting a token should return a valid GUID", function(done) {
+    this.timeout(10000);
     chai
       .request(HOST)
       .post("/api-v1/auth/login")
       .send({ email: "reyesdiego@hotmail.com", password: "1234" })
-      .end((err, data) => {
+      .then(data => {
         token = data.res.text;
-        console.log(token);
         jwt.verify(token, secret, (err, p) => {
-          console.error(err);
           assert.isNull(err);
           p.email.should.be.equal("reyesdiego@hotmail.com");
-          Promise.resolve();
+          done();
         });
+      })
+      .catch(err => {
+        done();
       });
+
     // chai
     //   .request(HOST)
     //   .post("/api-v1/auth/login")
