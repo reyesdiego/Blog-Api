@@ -5,7 +5,7 @@ const cors = require("cors");
 const settings = require("../../settings");
 const routes = require("../routes");
 const mongooseUp = require("./mongooseUp");
-const { green, red } = require("../utils");
+const { log } = require("../utils");
 
 module.exports = () => {
   const app = express();
@@ -17,7 +17,7 @@ module.exports = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  //
+  //api version 1
   app.use("/api-v1", routes);
 
   app.on("uncaughtException", err => {
@@ -31,18 +31,20 @@ module.exports = () => {
     next(err);
   });
 
-  mongooseUp(async () => {
+  mongooseUp(async connection => {
     try {
       await app.listen(settings.http.port);
       app.emit("app_started");
-      green(
+      log.green(
         `API running on port ${settings.http.port}. (${process.version}) pid:${
           process.pid
         } - ${new Date()}`
       );
-    } catch (ex) {
-      red("Error starting Blog app:" + err);
-      process.exit(2);
+    } catch (err) {
+      log.red("Error starting Blog app:" + err);
+      connection.close(() => {
+        process.exit(2);
+      });
     }
   });
 

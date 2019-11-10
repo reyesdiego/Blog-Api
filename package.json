@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit  ./src/tests/routes.test.js ./src/tests/unitTest.js",
-    "start": "node ."
+    "test": "NODE_ENV=development mocha --exit  ./src/tests/routes.test.js ./src/tests/unitTest.js",
+    "start": "NODE_ENV=development node ."
   },
   "keywords": [],
   "author": "Diego Reyes",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^6.10.2",
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "compression": "^1.7.4",

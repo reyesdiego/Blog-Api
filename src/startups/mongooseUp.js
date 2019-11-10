@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const { mongo } = require("../../settings");
+const { log } = require("../utils");
 
 module.exports = callback => {
   mongoose.Promise = Promise;
@@ -14,39 +15,39 @@ module.exports = callback => {
         .connect(mongo.host, mongo.options, (err, data) => {
           if (!err) if (callback) callback(mongoose.connection);
         })
-        .catch(err => console.error(err));
+        .catch(err => log.red(err));
     } else {
-      mongoose.connect(mongo.url).catch(() => console.error(err));
+      mongoose.connect(mongo.url).catch(() => log.red(err));
     }
   };
 
   mongoose.connection.on("connecting", function() {
-    console.log(`MongoDB - Connecting to Mongo ...`);
+    log.black(`MongoDB - Connecting to Mongo ...${mongo.host}`);
   });
 
   mongoose.connection.on("error", function(err) {
-    console.log("MongoDB - Could not connect to MongoDB");
+    log.red("MongoDB - Could not connect to MongoDB");
   });
 
   mongoose.connection.on("disconnected", function(err) {
-    console.log("MongoDB - Lost MongoDB connection...");
+    log.red("MongoDB - Lost MongoDB connection...");
   });
 
   mongoose.connection.on("connected", function(e) {
-    console.log(
+    log.green(
       `MongoDB - Connected to ${mongoose.connection.host} - DB: ${mongoose.connection.name}. (Mongoose ${mongoose.version})`
     );
   });
 
   mongoose.connection.on("reconnected", function() {
-    console.log(
+    log.yellow(
       `MongoDB - Reconneted to MongoDB on ${mongoose.connection.host}. (Mongoose ${mongoose.version})`
     );
   });
 
   process.on("SIGINT", () => {
     mongoose.connection.close(() => {
-      console.info(
+      log.red(
         "Mongoose default connection disconnected through app termination"
       );
       process.exit();
