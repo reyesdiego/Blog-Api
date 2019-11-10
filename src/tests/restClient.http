@@ -17,7 +17,7 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/api-v1/posts
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGM3NjEzM2RkYzM0YmQ0Y2E0MGIxYzIiLCJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzMzNDc2NDN9.8j2Ze0e1AMfnm4arBBP1uKLHM6swUKN9i54lDtdbvps
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGM3NmU0ZDEyNTNhNzEwOTQ5ZmNjNjYiLCJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20iLCJpYXQiOjE1NzM0MTc1Mjd9.kO7ZSgUxph47LvBgNe17OqD3w5GAq1zg1R4bryiLa9I
 
 {"title":"Test Title ", "body":"Test Body @Diego"}
 
