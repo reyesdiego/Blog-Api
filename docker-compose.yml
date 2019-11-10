@@ -1,0 +1,26 @@
+version: "2.1"
+
+services:
+  web:
+    image: blog
+    build: .
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/blog-api
+      - /blog-api/node_modules
+  mongo:
+    image: "bitnami/mongodb:4.0"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
