@@ -11,7 +11,7 @@
   "author": "Diego Reyes",
   "license": "ISC",
   "dependencies": {
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.3",
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
